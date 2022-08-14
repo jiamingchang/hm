@@ -29,7 +29,7 @@ func main(){
 		v2.DELETE("deleteprescription", api.Deleteprescription)
 	}
 
-	err := router.Run(":8080")
+	err := router.Run(":80")
 	if err != nil {
 		log.Fatalln(err)
 	}
