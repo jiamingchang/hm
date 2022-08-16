@@ -20,7 +20,7 @@ RUN go get -u github.com/cosmtrek/air \
     && go mod download
 RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 
-EXPOSE 80
+EXPOSE 8080
 
 # docker run时
 ENTRYPOINT ["air"]

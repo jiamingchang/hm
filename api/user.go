@@ -17,6 +17,7 @@ func Login(c *gin.Context){
 	if err != nil {
 		c.JSON(http.StatusOK,gin.H{
 			"message": "用户不存在或密码错误",
+			"error": err.Error(),
 		})
 		return
 	}
