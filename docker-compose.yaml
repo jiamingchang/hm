@@ -29,25 +29,6 @@ services:
       - hm-server
 
 
-  nginx:
-    image: nginx
-    container_name: mynginx
-    restart: always
-    privileged: true
-    ports:
-      - "80:80"
-      - "443:443"
-    volumes:
-      # 挂载nginx目录
-      - /usr/home/share:/usr/share/nginx
-      # 挂载nginx日志
-      - /home/nginx/log:/var/log/nginx
-      # 挂载nginx配置文件
-      - /home/nginx/conf.d:/etc/nginx/conf.d
-      - /home/nginx/sites-available:/etc/nginx/sites-available
-      - /home/nginx/sites-enabled:/etc/nginx/sites-enabled
-    networks:
-      - hm-server
 
   hm:
     container_name: myhm
@@ -57,7 +38,7 @@ services:
       context: ./
       dockerfile: Dockerfile
     ports:
-      - "8080:8080"
+      - "8089:8089"
     volumes:
       # 挂载代码，方便同步上传
       - /home/hm:/hm
