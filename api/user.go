@@ -11,9 +11,15 @@ import (
 )
 
 func Login(c *gin.Context){
-	name := c.PostForm("name")
-	password := c.PostForm("password")
-	user, err := models.Login(name, password)
+	var json struct{
+		Name string `json:"name" form:"name" validate:"required"`
+		Password string `json:"password" form:"password" validate:"required"`
+	}
+	if !BindAndValid(c, &json){
+		return
+	}
+
+	user, err := models.Login(json.Name, json.Password)
 	if err != nil {
 		c.JSON(http.StatusOK,gin.H{
 			"message": "用户不存在或密码错误",

@@ -64,6 +64,8 @@ services:
     depends_on:
       - mysql
       - nginx
+    entrypoint: ["./wait-for-it.sh", "mymysql:3306", "--", "air"]
+
     networks:
       - hm-server
 

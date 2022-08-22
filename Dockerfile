@@ -23,5 +23,5 @@ RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 EXPOSE 8080
 
 # docker run时
-ENTRYPOINT ["air"]
+#ENTRYPOINT ["air"]
 

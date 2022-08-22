@@ -43,7 +43,15 @@ func Deleteprescription(c *gin.Context){
 }
 
 func Editprescriptionv1(c *gin.Context){
-	err := models.Editprescriptionv1(pkg.Current(c).ID, c.PostForm("id"), c.PostForm("state"))
+	var json struct{
+		Id uint `json:"id" form:"id" validate:"required"`
+		State string `json:"state" form:"state" validate:"required"`
+	}
+	if !BindAndValid(c, &json){
+		return
+	}
+
+	err := models.Editprescriptionv1(pkg.Current(c).ID, json.Id, json.State)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
@@ -56,7 +64,15 @@ func Editprescriptionv1(c *gin.Context){
 }
 
 func Editprescriptionv2(c *gin.Context){
-	err := models.Editprescriptionv2(c.PostForm("id"), c.PostForm("state"))
+	var json struct{
+		Id uint `json:"id" form:"id" validate:"required"`
+		State string `json:"state" form:"state" validate:"required"`
+	}
+	if !BindAndValid(c, &json){
+		return
+	}
+
+	err := models.Editprescriptionv1(pkg.Current(c).ID, json.Id, json.State)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
