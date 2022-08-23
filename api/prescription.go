@@ -72,7 +72,7 @@ func Editprescriptionv2(c *gin.Context){
 		return
 	}
 
-	err := models.Editprescriptionv1(pkg.Current(c).ID, json.Id, json.State)
+	err := models.Editprescriptionv2(json.Id, json.State)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
