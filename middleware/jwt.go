@@ -8,7 +8,7 @@ import (
 
 var jwtSecret = []byte(setting.AppSettings.JwtSecret)
 
-type  Claims struct {
+type Claims struct {
 	UserID 	 string `json:"userid"`
 	Authority     string     `json:"authority"`
 	jwt.StandardClaims

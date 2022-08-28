@@ -5,11 +5,11 @@ import (
 	"github.com/spf13/cast"
 	"hm/middleware"
 	"hm/models"
-	"hm/pkg"
 	"log"
 	"net/http"
 )
 
+// Login 登录账号
 func Login(c *gin.Context){
 	var json struct{
 		Name string `json:"name" form:"name" validate:"required"`
@@ -37,6 +37,7 @@ func Login(c *gin.Context){
 	})
 }
 
+// AddUser 注册账号
 func AddUser(c *gin.Context){
 	var json models.User
 	if !BindAndValid(c, &json){
@@ -54,8 +55,9 @@ func AddUser(c *gin.Context){
 	})
 }
 
+// DeleteUser 注销账号
 func DeleteUser(c *gin.Context){
-	user := pkg.Current(c)
+	user := Current(c)
 	err := user.DeleteUser()
 	if err != nil {
 		c.JSON(http.StatusOK,gin.H{
@@ -68,13 +70,15 @@ func DeleteUser(c *gin.Context){
 	})
 }
 
+// GetUser 获取用户信息
 func GetUser(c *gin.Context){
-	user := pkg.Current(c)
+	user := Current(c)
 	c.JSON(http.StatusOK,gin.H{
 		"user": user,
 	})
 }
 
+// GetUserList 获取用户列表
 func GetUserList(c *gin.Context){
 	users := models.GetUserList(c.Query("true_name"))
 	c.JSON(http.StatusOK,gin.H{

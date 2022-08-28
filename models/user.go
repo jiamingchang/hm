@@ -4,6 +4,7 @@ import (
 	"gorm.io/gorm"
 )
 
+// User 用户表
 type User struct {
 	gorm.Model
 	Name string		 `json:"name" form:"name" validate:"required"`
@@ -15,11 +16,13 @@ type User struct {
 	Authority string `gorm:"default:user"`
 }
 
+// Login 登录账号
 func Login(name, password string) (user User, err error){
 	err = db.Where("name = ? AND password = ?", name, password).First(&user).Error
 	return
 }
 
+// AddUser 注册账号
 func AddUser(user User) (err error) {
 	err = db.First(&User{}, "name", user.Name).Error
 	if err != nil{
@@ -33,6 +36,7 @@ func GetUser(id interface{})(user User, err error){
 	return
 }
 
+// GetUserList 获取用户列表
 func GetUserList(name string)(users []User){
 	result := db.Model(&User{})
 	if name != ""{
@@ -42,6 +46,7 @@ func GetUserList(name string)(users []User){
 	return
 }
 
+// DeleteUser 注销账号
 func (u *User)DeleteUser() error{
 	return db.Delete(&User{}, u.ID).Error
 }

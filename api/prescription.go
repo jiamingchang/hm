@@ -3,11 +3,11 @@ package api
 import (
 	"github.com/gin-gonic/gin"
 	"hm/models"
-	"hm/pkg"
 	"log"
 	"net/http"
 )
 
+// Addprescription 增加处方
 func Addprescription(c *gin.Context) {
 	var json struct{
 		Prescription models.Prescription  `json:"prescription" validate:"required"`
@@ -28,6 +28,8 @@ func Addprescription(c *gin.Context) {
 		"isSuccess": true,
 	})
 }
+
+// Deleteprescription 删除处方
 func Deleteprescription(c *gin.Context){
 	err := models.Deleteprescription(c.Query("id"))
 	if err != nil {
@@ -42,6 +44,7 @@ func Deleteprescription(c *gin.Context){
 	})
 }
 
+// Editprescriptionv1 编辑处方（user）
 func Editprescriptionv1(c *gin.Context){
 	var json struct{
 		Id uint `json:"id" form:"id" validate:"required"`
@@ -51,7 +54,7 @@ func Editprescriptionv1(c *gin.Context){
 		return
 	}
 
-	err := models.Editprescriptionv1(pkg.Current(c).ID, json.Id, json.State)
+	err := models.Editprescriptionv1(Current(c).ID, json.Id, json.State)
 	if err != nil {
 		c.JSON(http.StatusOK, gin.H{
 			"message": err.Error(),
@@ -63,6 +66,7 @@ func Editprescriptionv1(c *gin.Context){
 	})
 }
 
+// Editprescriptionv2 编辑处方（admin）
 func Editprescriptionv2(c *gin.Context){
 	var json struct{
 		Id uint `json:"id" form:"id" validate:"required"`
@@ -84,12 +88,15 @@ func Editprescriptionv2(c *gin.Context){
 	})
 }
 
+// GetprescriptionListv1 获取处方（user）
 func GetprescriptionListv1(c *gin.Context){
-	prescriptionList := models.GetprescriptionListv1(pkg.Current(c).ID, c.Query("state"))
+	prescriptionList := models.GetprescriptionListv1(Current(c).ID, c.Query("state"))
 	c.JSON(http.StatusOK, gin.H{
 		"prescriptionList": prescriptionList,
 	})
 }
+
+// GetprescriptionListv2 获取处方（admin）
 func GetprescriptionListv2(c *gin.Context){
 	prescriptionList := models.GetprescriptionListv2(c.Query("state"))
 	c.JSON(http.StatusOK, gin.H{

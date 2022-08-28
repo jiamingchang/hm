@@ -12,9 +12,6 @@ WORKDIR /hm
 
 COPY . .
 
-# RUN apt-get install git \
-#     && git clone https://github.com/ZibeSun/PDT-serve
-
 # docker build时
 RUN go get -u github.com/cosmtrek/air \
     && go mod download

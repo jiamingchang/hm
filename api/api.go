@@ -7,10 +7,16 @@ import (
 	ut "github.com/go-playground/universal-translator"
 	"github.com/go-playground/validator/v10"
 	zhTranslations "github.com/go-playground/validator/v10/translations/zh"
+	"hm/models"
 	"log"
 	"net/http"
 	"strings"
 )
+
+// Current 获取当前用户
+func Current(c *gin.Context) (user *models.User){
+	return c.MustGet("user").(*models.User)
+}
 
 // BindAndValid 表单数据验证函数
 func BindAndValid(context *gin.Context, data interface{}) bool {

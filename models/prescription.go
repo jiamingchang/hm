@@ -6,6 +6,7 @@ import (
 	"gorm.io/gorm/clause"
 )
 
+// Prescription 药单
 type Prescription struct {
 	gorm.Model
 	PrescriptionID string	`json:"prescription_id" validate:"required"`
@@ -18,6 +19,7 @@ type Prescription struct {
 	User User				`json:"user" validate:"-"`
 }
 
+// BasicInfo 药单基础信息
 type BasicInfo struct {
 	gorm.Model
 	RecordNumber string			`json:"record_number" validate:"required"`
@@ -32,6 +34,7 @@ type BasicInfo struct {
 	Doctor string				`json:"doctor" validate:"required"`
 }
 
+// MedInfoList 药品信息
 type MedInfoList struct {
 	gorm.Model
 	MedID string	`json:"med_id" validate:"required"`
@@ -42,6 +45,7 @@ type MedInfoList struct {
 	PrescriptionId uint
 }
 
+// Addprescription 增加处方
 func (p *Prescription)Addprescription(Ids []MedInfoList) (err error){
 	user, _:= GetUser(p.UserId)
 	p.User = user
@@ -50,6 +54,7 @@ func (p *Prescription)Addprescription(Ids []MedInfoList) (err error){
 	return
 }
 
+// Deleteprescription 删除处方
 func Deleteprescription(id interface{}) error{
 	var prescription Prescription
 	result := db.First(&prescription, id)
@@ -62,6 +67,7 @@ func Deleteprescription(id interface{}) error{
 	return nil
 }
 
+// Editprescriptionv1 编辑处方（user）
 func Editprescriptionv1(userid, id, state interface{})(err error){
 	var p Prescription
 	err = db.First(&p, id).Error
@@ -75,6 +81,7 @@ func Editprescriptionv1(userid, id, state interface{})(err error){
 	return nil
 }
 
+// Editprescriptionv2 编辑处方（admin）
 func Editprescriptionv2(id, state interface{})(err error){
 	var p Prescription
 	err = db.First(&p, id).Error
@@ -85,20 +92,22 @@ func Editprescriptionv2(id, state interface{})(err error){
 	return
 }
 
-func (b *BasicInfo)AddbasicInfo(){
-	db.Create(&b)
-}
-
-func (m *MedInfoList)AddmedInfo(){
-	db.Create(&m)
-}
-
+// GetprescriptionListv1 获取处方（user）
 func GetprescriptionListv1(userid, state interface{}) (prescriptionList []Prescription) {
-	db.Order("id desc").Where("state", state).Where("user_id", userid).Preload(clause.Associations).Find(&prescriptionList)
+	result := db.Order("id desc")
+	if state !=""{
+		result = result.Where("state", state)
+	}
+	result.Where("user_id", userid).Preload(clause.Associations).Find(&prescriptionList)
 	return
 }
 
+// GetprescriptionListv2 获取处方（admin）
 func GetprescriptionListv2(state string) (prescriptionList []Prescription) {
-	db.Order("id desc").Where("state", state).Preload(clause.Associations).Find(&prescriptionList)
+	result := db.Order("id desc")
+	if state !=""{
+		result = result.Where("state", state)
+	}
+	result.Preload(clause.Associations).Find(&prescriptionList)
 	return
 }

@@ -8,6 +8,7 @@ import (
 	"time"
 )
 
+// AuthRequired token验证中间件
 func AuthRequired() gin.HandlerFunc {
 	return func(context *gin.Context) {
 		var code int
@@ -60,6 +61,7 @@ func AuthRequired() gin.HandlerFunc {
 	}
 }
 
+// Authority 权限验证中间件
 func Authority(auth ...string) gin.HandlerFunc {
 	return func(c *gin.Context) {
 		user := c.MustGet("user").(*models.User)
