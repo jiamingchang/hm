@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<project version="4">
-  <component name="SshConfigs">
-    <configs>
-      <sshConfig host="110.41.10.96" id="51177f6b-1d1d-4e47-a517-8b2c6eaaabc6" keyPath="C:\Users\86147\Desktop\作业\项导树\ecs\KeyPair-fsr.pem" port="22" nameFormat="DESCRIPTIVE" username="root" />
-    </configs>
-  </component>
-</project>
