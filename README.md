@@ -1,5 +1,7 @@
 # 基于鸿蒙操作系统的配送药品智能机器人系统设计——后端
 
+项目开源网址：https://gitee.com/openharmony-sig/online_event/tree/master/solution_student_challenge/%E5%9F%BA%E4%BA%8EOpenHarmony%E7%9A%84%E8%87%AA%E5%8A%A8%E9%85%8D%E8%8D%AF%E6%9C%BA%E5%99%A8%E4%BA%BA%E7%B3%BB%E7%BB%9F_%E9%99%88%E6%B1%89%E6%AD%A6/
+
 ## 1、开发指导
 
 1）目录介绍
